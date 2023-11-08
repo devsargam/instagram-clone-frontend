@@ -1,4 +1,5 @@
 'use client';
+import { useLocalStorage } from '@/hooks';
 import { axiosClient } from '@/lib/httpClient';
 import { LoginSchema } from '@/schema';
 import { AxiosError, AxiosResponse } from 'axios';
@@ -36,6 +37,7 @@ export function Login() {
 
 function LoginForm() {
   const router = useRouter();
+  const [token, setToken] = useLocalStorage<string>('accessToken', '');
 
   interface ISignUpFormValues {
     username: string;
@@ -60,6 +62,9 @@ function LoginForm() {
       })) as AxiosResponse;
 
     if (response.status === 201) {
+      if (response.data.access_token) {
+        setToken(response.data.access_token);
+      }
       console.log(response);
       console.log('Logged in');
       router.push('/');

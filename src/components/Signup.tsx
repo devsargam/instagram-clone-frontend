@@ -6,6 +6,7 @@ import { axiosClient } from '@/lib/httpClient';
 import { AxiosError, AxiosResponse } from 'axios';
 import { SignupSchema } from '@/schema';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
+import { useRouter } from 'next/navigation';
 
 export function SignUp() {
   return (
@@ -25,6 +26,8 @@ export function SignUp() {
 }
 
 function SignUpForm() {
+  const router = useRouter();
+
   interface ISignUpFormValues {
     email: string;
     username: string;
@@ -51,6 +54,7 @@ function SignUpForm() {
 
     if (response.status === 201) {
       console.log('Account Created');
+      router.push('/accounts/verification');
     }
     actions.setSubmitting(false);
   }

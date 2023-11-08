@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const SigninSchema = z.object({
+const LoginSchema = z.object({
   username: z
     .string()
     .min(3, { message: 'Username must be at least 3 characters' })
@@ -15,4 +15,4 @@ const SigninSchema = z.object({
     .max(128, { message: 'Password must be no more than 128 characthers' }),
 });
 
-export { SigninSchema };
+export { LoginSchema };

@@ -8,6 +8,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export function Login() {
   return (
@@ -37,7 +39,7 @@ export function Login() {
 
 function LoginForm() {
   const router = useRouter();
-  const [token, setToken] = useLocalStorage<string>('accessToken', '');
+  const [_, setToken] = useLocalStorage<string>('accessToken', '');
 
   interface ISignUpFormValues {
     username: string;
@@ -58,7 +60,9 @@ function LoginForm() {
         ...data,
       })
       .catch((error: AxiosError) => {
-        console.log(error.response);
+        console.error(error.response);
+        // @ts-expect-error
+        toast(error.response?.data.message);
       })) as AxiosResponse;
 
     if (response.status === 201) {
@@ -74,6 +78,7 @@ function LoginForm() {
 
   return (
     <>
+      <ToastContainer />
       <Image
         src="/instagram.png"
         width={175}

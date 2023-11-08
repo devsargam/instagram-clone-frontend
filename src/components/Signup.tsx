@@ -7,10 +7,13 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { SignupSchema } from '@/schema';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { useRouter } from 'next/navigation';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export function SignUp() {
   return (
     <main className="flex justify-center flex-col items-center">
+      <ToastContainer />
       <div className="flex flex-col items-center border border-gray-300 m-3 px-3 py-3">
         <SignUpForm />
       </div>
@@ -50,6 +53,8 @@ function SignUpForm() {
       })
       .catch((error: AxiosError) => {
         console.log(error.response);
+        // @ts-expect-error
+        toast(error.response?.data.message);
       })) as AxiosResponse;
 
     if (response.status === 201) {

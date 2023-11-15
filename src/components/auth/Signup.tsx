@@ -17,11 +17,7 @@ export function SignUp() {
       <div className="flex flex-col items-center border border-gray-300 m-3 px-3 py-3">
         <SignUpForm />
       </div>
-      <div
-        className="
-     flex flex-col items-center border border-gray-300 m-3 px-3 py-3 
-      "
-      >
+      <div className="flex flex-col items-center border border-gray-300 m-3 px-3 py-3">
         <HaveAnAccount />
       </div>
     </main>

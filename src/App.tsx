@@ -1,9 +1,13 @@
-import Home from '@/app/page';
+import { RouterProvider } from 'react-router-dom';
+import { router } from '@/router';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
     <>
-      <Home />
+      <ToastContainer />
+      <RouterProvider router={router} />
     </>
   );
 }

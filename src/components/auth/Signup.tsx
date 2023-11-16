@@ -1,19 +1,14 @@
-'use client';
 import { Field, Form, Formik, FormikHelpers } from 'formik';
-import Image from 'next/image';
-import Link from 'next/link';
 import { axiosClient } from '@/lib/httpClient';
 import { AxiosError, AxiosResponse } from 'axios';
 import { SignupSchema } from '@/schema';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
-import { useRouter } from 'next/navigation';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+import { Link, useNavigate } from 'react-router-dom';
 
 export function SignUp() {
   return (
     <main className="flex justify-center flex-col items-center">
-      <ToastContainer />
       <div className="flex flex-col items-center border border-gray-300 m-3 px-3 py-3">
         <SignUpForm />
       </div>
@@ -25,8 +20,7 @@ export function SignUp() {
 }
 
 function SignUpForm() {
-  const router = useRouter();
-
+  const navigate = useNavigate();
   interface ISignUpFormValues {
     email: string;
     username: string;
@@ -49,25 +43,19 @@ function SignUpForm() {
       })
       .catch((error: AxiosError) => {
         console.log(error.response);
-        // @ts-expect-error
         toast(error.response?.data.message);
       })) as AxiosResponse;
 
     if (response.status === 201) {
       console.log('Account Created');
-      router.push('/accounts/verification');
+      navigate('/accounts/verification');
     }
     actions.setSubmitting(false);
   }
 
   return (
     <>
-      <Image
-        src="/instagram.png"
-        width={175}
-        height={51}
-        alt="Instagram Logo"
-      />
+      <img src="/instagram.png" width={175} height={51} alt="Instagram Logo" />
       <div>
         <Formik
           initialValues={initialValues}
@@ -126,21 +114,21 @@ function SignUpForm() {
               <span className="text-xs text-center">
                 People who use our service may have uploaded your contact
                 information to Instagram.{' '}
-                <Link className="link" href="#">
+                <Link className="link" to="#">
                   Learn More
                 </Link>
               </span>
               <span className="text-xs text-center">
                 By signing up, you agree to our{' '}
-                <Link className="link" href="#">
+                <Link className="link" to="#">
                   Terms
                 </Link>
                 ,{' '}
-                <Link href="#" className="link">
+                <Link to="#" className="link">
                   Privacy Policy
                 </Link>{' '}
                 and{' '}
-                <Link href="#" className="link">
+                <Link to="#" className="link">
                   Cookies Policy
                 </Link>
                 .
@@ -172,7 +160,7 @@ function HaveAnAccount() {
     <div className="min-w-xs">
       <p>
         Have an account?{' '}
-        <Link href="/accounts/login" className="link">
+        <Link to="/accounts/login" className="link">
           Log in
         </Link>
       </p>

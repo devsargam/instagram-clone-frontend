@@ -1,5 +1,4 @@
 import { IUserProfile } from '@/interfaces';
-import Image from 'next/image';
 
 const userProfile: IUserProfile = {
   id: '4c91ff9f-8687-4d8b-915d-bab50999d33f',
@@ -25,7 +24,7 @@ export function UpperProfile() {
   return (
     <div className="flex gap-12 pt-20 pb-10">
       {/* DP */}
-      <Image
+      <img
         src={displayPictureUrl}
         alt="Display Picture"
         height={150}

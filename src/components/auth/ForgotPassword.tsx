@@ -1,11 +1,9 @@
-'use client';
-
 import { axiosClient } from '@/lib/httpClient';
 import { ForgotPasswordSchema } from '@/schema';
 import { AxiosError, AxiosResponse } from 'axios';
 import { Field, Form, Formik, FormikHelpers } from 'formik';
-import Link from 'next/link';
-import { ToastContainer, toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 
 export function ForgotPassword() {
@@ -25,7 +23,6 @@ export function ForgotPassword() {
       .get(`/auth/forgotpass?username=${data.username}`)
       .catch((error: AxiosError) => {
         console.error(error.response);
-        // @ts-expect-error
         toast.error(error.response?.data.message);
       })) as AxiosResponse;
 
@@ -35,7 +32,6 @@ export function ForgotPassword() {
 
   return (
     <main className="flex justify-center flex-col items-center">
-      <ToastContainer />
       <div className="flex flex-col items-center border border-gray-300 m-3 px-3 py-3">
         <h1 className="w-96 text-center text-4xl font-semibold">
           Forgot Password
@@ -67,7 +63,7 @@ export function ForgotPassword() {
             </Form>
           )}
         </Formik>
-        <Link href="/accounts/login" className="link">
+        <Link to="/accounts/login" className="link">
           Login
         </Link>
       </div>

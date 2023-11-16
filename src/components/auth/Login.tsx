@@ -1,20 +1,17 @@
-'use client';
 import { useLocalStorage } from '@/hooks';
 import { axiosClient, setAxiosAuthHeader } from '@/lib/httpClient';
 import { LoginSchema } from '@/schema';
 import { AxiosError, AxiosResponse } from 'axios';
 import { Field, Form, Formik, FormikHelpers } from 'formik';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Link, useNavigate } from 'react-router-dom';
 
 export function Login() {
   return (
     <main className="flex justify-center items-center h-screen">
-      <Image
+      <img
         src="/screenshot.png"
         height={500}
         width={760}
@@ -38,8 +35,8 @@ export function Login() {
 }
 
 function LoginForm() {
-  const router = useRouter();
   const [_, setToken] = useLocalStorage<string>('accessToken', '');
+  const navigate = useNavigate();
 
   interface ISignUpFormValues {
     username: string;
@@ -61,6 +58,7 @@ function LoginForm() {
       })
       .catch((error: AxiosError) => {
         console.error(error.response);
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error
         toast(error.response?.data.message);
       })) as AxiosResponse;
@@ -72,20 +70,14 @@ function LoginForm() {
       }
       console.log(response);
       console.log('Logged in');
-      router.push('/');
+      navigate('/');
     }
     actions.setSubmitting(false);
   }
 
   return (
     <>
-      <ToastContainer />
-      <Image
-        src="/instagram.png"
-        width={175}
-        height={51}
-        alt="Instagram Logo"
-      />
+      <img src="/instagram.png" width={175} height={51} alt="Instagram Logo" />
       <div>
         <Formik
           initialValues={initialValues}
@@ -134,7 +126,7 @@ function LoginForm() {
         </Formik>
         <div className="flex justify-center">
           <Link
-            href="/accounts/password/forgot"
+            to="/accounts/password/forgot"
             className="link text-xs my-3 relative"
           >
             Forgot password?
@@ -158,7 +150,7 @@ function DontHaveAnAccount() {
     <div className="min-w-xs">
       <p>
         Don&apos;t Have an account?{' '}
-        <Link href="/accounts/signup" className="link">
+        <Link to="/accounts/signup" className="link">
           Sign up
         </Link>
       </p>

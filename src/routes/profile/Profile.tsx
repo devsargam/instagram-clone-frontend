@@ -1,14 +1,11 @@
-'use client';
-
 import { Navigation } from '@/components/common/Navigation';
 import { Posts } from '@/components/profile';
 import { UpperProfile } from '@/components/profile/UpperProfile';
+import { useParams } from 'react-router-dom';
 
-export default function ProfilePage({
-  params,
-}: {
-  params: { username: string };
-}) {
+export function ProfilePage() {
+  const { username } = useParams();
+  console.log(username);
   return (
     <main className="flex h-screen bg-black text-white">
       {/* Left Side Navigation Bar */}

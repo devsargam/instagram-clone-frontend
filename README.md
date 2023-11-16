@@ -1,6 +1,6 @@
 <h1 align="center" style="border: 0;"> 📷 Instagram Clone Frontend  </h1>
 
-Frontend code for instagram clone with Nextjs & Tailwindcss
+Frontend code for instagram clone with React & Tailwindcss
 
 ### NOTE: The backend code for this can be found at
 

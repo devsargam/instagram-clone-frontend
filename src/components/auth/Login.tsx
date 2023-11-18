@@ -1,12 +1,8 @@
-import { useLocalStorage } from '@/hooks';
-import { axiosClient, setAxiosAuthHeader } from '@/lib/httpClient';
 import { LoginSchema } from '@/schema';
-import { AxiosError, AxiosResponse } from 'axios';
 import { Field, Form, Formik, FormikHelpers } from 'formik';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { Link, useNavigate } from 'react-router-dom';
+import { useLogin } from '@/hooks/auth';
 
 export function Login() {
   return (
@@ -35,8 +31,8 @@ export function Login() {
 }
 
 function LoginForm() {
-  const [_, setToken] = useLocalStorage<string>('accessToken', '');
   const navigate = useNavigate();
+  const { login } = useLogin();
 
   interface ISignUpFormValues {
     username: string;
@@ -52,27 +48,9 @@ function LoginForm() {
     data: ISignUpFormValues,
     actions: FormikHelpers<ISignUpFormValues>,
   ) {
-    const response = (await axiosClient
-      .post('/auth/login', {
-        ...data,
-      })
-      .catch((error: AxiosError) => {
-        console.error(error.response);
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
-        toast(error.response?.data.message);
-      })) as AxiosResponse;
-
-    if (response.status === 201) {
-      if (response.data.access_token) {
-        setToken(response.data.access_token);
-        setAxiosAuthHeader(response.data.access_token);
-      }
-      console.log(response);
-      console.log('Logged in');
-      navigate('/');
-    }
+    await login(data.username, data.password);
     actions.setSubmitting(false);
+    navigate('/');
   }
 
   return (

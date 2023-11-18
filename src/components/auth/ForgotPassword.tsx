@@ -1,12 +1,11 @@
-import { axiosClient } from '@/lib/httpClient';
+import { useForgotPassword } from '@/hooks/auth';
 import { ForgotPasswordSchema } from '@/schema';
-import { AxiosError, AxiosResponse } from 'axios';
 import { Field, Form, Formik, FormikHelpers } from 'formik';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 
 export function ForgotPassword() {
+  const { forgotPassword } = useForgotPassword();
   interface IForgotPasswordFormValues {
     username: string;
   }
@@ -19,14 +18,7 @@ export function ForgotPassword() {
     data: IForgotPasswordFormValues,
     actions: FormikHelpers<IForgotPasswordFormValues>,
   ) {
-    const response = (await axiosClient
-      .get(`/auth/forgotpass?username=${data.username}`)
-      .catch((error: AxiosError) => {
-        console.error(error.response);
-        toast.error(error.response?.data.message);
-      })) as AxiosResponse;
-
-    toast.success(response.data.message);
+    await forgotPassword(data.username);
     actions.setSubmitting(false);
   }
 

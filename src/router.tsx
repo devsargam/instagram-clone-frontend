@@ -10,11 +10,12 @@ import {
   VerificationPage,
 } from './routes/accounts';
 import { ProfilePage } from './routes/profile';
+import Home from './routes/Root';
+import { Protected } from './Protected';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<h1>hello</h1>} />
       <Route path="/accounts/login" element={<LoginPage />} />
       <Route path="/accounts/signup" element={<SignUpPage />} />
       <Route path="/accounts/verification" element={<VerificationPage />} />
@@ -22,7 +23,22 @@ export const router = createBrowserRouter(
         path="/accounts/forgot-password"
         element={<ForgotPasswordPage />}
       />
-      <Route path="/:username" element={<ProfilePage />} />
+      <Route
+        path="/"
+        element={
+          <Protected>
+            <Home />
+          </Protected>
+        }
+      />
+      <Route
+        path="/:username"
+        element={
+          <Protected>
+            <ProfilePage />
+          </Protected>
+        }
+      />
     </>,
   ),
 );

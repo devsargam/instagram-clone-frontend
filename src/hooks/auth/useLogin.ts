@@ -1,6 +1,6 @@
 import { useLocalStorage } from '@/hooks/';
 import { axiosClient, setAxiosAuthHeader } from '@/lib/httpClient';
-import { userState } from '@/store/account';
+import { userState } from '@/store/atoms/account';
 import { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
 import { useSetRecoilState } from 'recoil';

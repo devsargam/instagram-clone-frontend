@@ -3,10 +3,10 @@ export default function Home() {
 
   return (
     <main>
+      Hello
       {/* Left Navigation */}
       {/* News Feed & Stories */}
       {/* Right Profile, Suggestions & Footer */}
-      hii
     </main>
   );
 }

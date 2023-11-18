@@ -1,10 +1,9 @@
 import { Field, Form, Formik, FormikHelpers } from 'formik';
-import { axiosClient } from '@/lib/httpClient';
-import { AxiosError, AxiosResponse } from 'axios';
 import { SignupSchema } from '@/schema';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router-dom';
+import { useSignup } from '@/hooks/auth';
 
 export function SignUp() {
   return (
@@ -21,6 +20,7 @@ export function SignUp() {
 
 function SignUpForm() {
   const navigate = useNavigate();
+  const { signup } = useSignup();
   interface ISignUpFormValues {
     email: string;
     username: string;
@@ -37,19 +37,8 @@ function SignUpForm() {
     data: ISignUpFormValues,
     actions: FormikHelpers<ISignUpFormValues>,
   ) {
-    const response = (await axiosClient
-      .post('/auth/signup', {
-        ...data,
-      })
-      .catch((error: AxiosError) => {
-        console.log(error.response);
-        toast(error.response?.data.message);
-      })) as AxiosResponse;
-
-    if (response.status === 201) {
-      console.log('Account Created');
-      navigate('/accounts/verification');
-    }
+    await signup(data.email, data.password, data.username);
+    navigate('/accounts/verification');
     actions.setSubmitting(false);
   }
 

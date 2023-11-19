@@ -1,26 +1,56 @@
 import { Navigation } from '@/components/common/Navigation';
 import { Posts } from '@/components/profile';
 import { UpperProfile } from '@/components/profile/UpperProfile';
-import { useParams } from 'react-router-dom';
+import { useProfile } from '@/hooks/profile/useProfile';
+import { useEffect } from 'react';
+import { NavLink, useParams } from 'react-router-dom';
 
 export function ProfilePage() {
-  const { username } = useParams();
-  console.log(username);
+  const { profileNotFound: userNotFound, getProfile } = useProfile();
+  const param = useParams();
+
+  useEffect(() => {
+    getProfile(param.username!);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [param.username]);
+
   return (
     <main className="flex h-screen bg-black text-white">
       {/* Left Side Navigation Bar */}
       <Navigation />
       {/* // TODO: Implement Navigation*/}
       {/* Main Profile Section */}
-      <section className="flex flex-col w-full items-center">
-        {/* Profile Section with no of followers, following & posts */}
-        {/* Also, includes username, DP & bio */}
-        <UpperProfile />
-        {/* Separator */}
-        <hr className="border-r-[0.2px] border-gray-800 lg:w-4/5 w-full" />
-        {/* Posts */}
-        <Posts />
-      </section>
+
+      {/* Check if user exists */}
+      {userNotFound ? (
+        <UserNotFound />
+      ) : (
+        <section className="flex flex-col w-full items-center">
+          {/* Profile Section with no of followers, following & posts */}
+          {/* Also, includes username, DP & bio */}
+          <UpperProfile />
+          {/* Separator */}
+          <hr className="border-r-[0.2px] border-gray-800 lg:w-4/5 w-full" />
+          {/* Posts */}
+          <Posts />
+        </section>
+      )}
     </main>
+  );
+}
+
+function UserNotFound() {
+  return (
+    <section className="flex flex-col w-full items-center">
+      <h1 className="text-2xl max-w-xl pt-10">
+        Sorry, this page isn't available.
+      </h1>
+      <h3>
+        The link you followed may be broken, or the page may have been removed.{' '}
+        <NavLink to="/" className="link">
+          Go back to Instagram.
+        </NavLink>
+      </h3>
+    </section>
   );
 }

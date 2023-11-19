@@ -7,10 +7,10 @@ import { useSetRecoilState } from 'recoil';
 
 export function useProfile() {
   const setCurrentUserProfile = useSetRecoilState(currentProfileState);
-  const [profileNotFound, setProfileNotFound] = useState(false);
+  const [userNotFound, setUserNotFound] = useState(false);
 
   async function getProfile(username: string) {
-    setProfileNotFound(false);
+    setUserNotFound(false);
     try {
       const response = await axiosClient(`/users/profile/${username}`);
       const profileData = response.data as currentProfileType;
@@ -19,11 +19,11 @@ export function useProfile() {
       if (e instanceof AxiosError) {
         console.log(e.response?.status);
         if (e.response?.status) {
-          setProfileNotFound(true);
+          setUserNotFound(true);
         }
       }
     }
   }
 
-  return { getProfile, profileNotFound };
+  return { getProfile, userNotFound };
 }

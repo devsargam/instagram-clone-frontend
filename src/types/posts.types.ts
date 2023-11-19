@@ -3,7 +3,14 @@ export type postType = {
   title: string;
   caption: string;
   imagesUrl: string[];
+  author: {
+    id: string;
+    username: string;
+  };
   createdAt: string;
   updatedAt: string;
-  authorId: string;
+  _count: {
+    comments: number;
+    likes: number;
+  };
 };

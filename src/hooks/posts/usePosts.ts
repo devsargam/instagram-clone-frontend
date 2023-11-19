@@ -7,9 +7,7 @@ export function usePosts() {
 
   async function getPosts(userId: string) {
     const response = await axiosClient.get(`/posts/users/${userId}`);
-    console.log(response);
-
-    setPosts((oldPosts) => [...oldPosts, response.data]);
+    setPosts([...response.data]);
   }
   return { getPosts };
 }

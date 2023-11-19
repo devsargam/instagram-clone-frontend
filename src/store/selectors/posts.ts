@@ -1,13 +1,15 @@
 import { selector } from 'recoil';
 import { postState } from '../atoms/posts';
-import { profileFilterState } from '../atoms/profile';
 
-export const getPostsByUsername = selector({
-  key: 'getPostByUsername',
+export const previewPostSelector = selector({
+  key: 'previewPostSelector',
   get: ({ get }) => {
     const state = get(postState);
-    const currentProfileFilterState = get(profileFilterState);
-
-    return state.filter((post) => post.authorId === currentProfileFilterState);
+    return state.map((post) => ({
+      id: post.id,
+      commentCount: post._count.comments,
+      likeCount: post._count.likes,
+      previewImage: post.imagesUrl[0],
+    }));
   },
 });

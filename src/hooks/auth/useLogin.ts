@@ -1,13 +1,10 @@
-import { useLocalStorage } from '@/hooks/';
 import { axiosClient, setAxiosAuthHeader } from '@/lib/httpClient';
-import { userState } from '@/store/atoms/account';
+import { userState } from '@/store/atoms/user';
 import { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
 import { useSetRecoilState } from 'recoil';
 
 export function useLogin() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, setToken] = useLocalStorage<string>('accessToken', '');
   const setUser = useSetRecoilState(userState);
 
   async function login(username: string, password: string) {
@@ -28,8 +25,8 @@ export function useLogin() {
 
     if (response.status === 201) {
       if (response.data.access_token) {
-        setToken(response.data.access_token);
         setAxiosAuthHeader(response.data.access_token);
+        // Sets user state in memory and localstorage
         setUser({
           loading: false,
           token: response.data.access_token,

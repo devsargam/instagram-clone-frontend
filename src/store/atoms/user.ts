@@ -1,10 +1,6 @@
 import { atom } from 'recoil';
 import { localStorageEffect } from '../effects/localStorageEffect';
-
-type accountStateType = {
-  token: string;
-  loading: boolean;
-};
+import { accountStateType } from '@/types';
 
 const key = 'accountState';
 export const userState = atom<accountStateType>({

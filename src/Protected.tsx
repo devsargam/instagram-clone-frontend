@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil';
 import { Navigate } from 'react-router-dom';
-import { accountTokenSelector } from './store/selectors/account';
+import { userTokenSelector } from './store/selectors/user';
 
 interface ProtectedProps {
   children: React.ReactNode;
@@ -8,7 +8,7 @@ interface ProtectedProps {
 
 export function Protected({ children }: ProtectedProps) {
   // Checks if user has token in the browser localstorage
-  const userToken = useRecoilValue(accountTokenSelector);
+  const userToken = useRecoilValue(userTokenSelector);
 
   if (userToken) {
     return children;

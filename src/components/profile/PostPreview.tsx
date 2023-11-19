@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
-import { CommentIcon } from '../icons/Comment';
-import { LikeIcon } from '../icons/like';
+import { CommentIcon, LikeIcon } from '../icons';
 
 type Props = {
   id: string;

@@ -11,10 +11,10 @@ function App() {
   setAxiosAuthHeader(token);
 
   return (
-    <>
+    <main className="bg-black min-h-screen text-white">
       <ToastContainer />
       <RouterProvider router={router} />
-    </>
+    </main>
   );
 }
 

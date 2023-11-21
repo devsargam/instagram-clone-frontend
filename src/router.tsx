@@ -12,6 +12,7 @@ import {
 import { ProfilePage } from './routes/profile';
 import Home from './routes/Root';
 import { Protected } from './Protected';
+import EnlargedPost from './routes/p/EnlargedPost';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -36,6 +37,14 @@ export const router = createBrowserRouter(
         element={
           <Protected>
             <ProfilePage />
+          </Protected>
+        }
+      />
+      <Route
+        path="/p/:id"
+        element={
+          <Protected>
+            <EnlargedPost />
           </Protected>
         }
       />

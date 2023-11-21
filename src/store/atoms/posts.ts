@@ -6,23 +6,8 @@ export const postState = atom<postType[]>({
   default: [],
 });
 
-export const singlePostState = atom<postType>({
-  key: 'singlePostState',
-  default: {
-    author: {
-      displayPictureUrl: '',
-      id: '',
-      username: '',
-    },
-    caption: '',
-    title: '',
-    imagesUrl: [],
-    id: '',
-    _count: {
-      comments: 0,
-      likes: 0,
-    },
-    createdAt: '',
-    updatedAt: '',
-  },
-});
+export const postStateWithID = (id: string) =>
+  atom<postType | null>({
+    key: id,
+    default: null,
+  });

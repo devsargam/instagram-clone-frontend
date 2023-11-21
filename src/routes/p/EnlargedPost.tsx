@@ -1,12 +1,14 @@
+import { useLike } from '@/hooks/posts/useLikes';
 import { useSinglePost } from '@/hooks/posts/useSinglePost';
-import { singlePostState } from '@/store/atoms/posts';
-import { Suspense, useEffect } from 'react';
+import { postStateWithID } from '@/store/atoms/posts';
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
+import { PostLikeIcon } from '@/components/icons';
 
 function EnlargedPost() {
   const { id } = useParams();
-  const { getPost } = useSinglePost();
+  const { getPost } = useSinglePost(id!);
 
   useEffect(() => {
     (async () => {
@@ -15,18 +17,41 @@ function EnlargedPost() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  if (!id) {
+    return null;
+  }
+
   return (
     <>
       <main className="flex justify-center">
-        <Post />
+        <Post postID={id} />
       </main>
     </>
   );
 }
 
-function Post() {
-  const post = useRecoilValue(singlePostState);
-  const { id, author, caption, _count, imagesUrl, createdAt } = post;
+type PostProps = {
+  postID: string;
+};
+
+function Post({ postID }: PostProps) {
+  const post = useRecoilValue(postStateWithID(postID));
+  const { like, unLike, isLiked } = useLike(postID);
+  const [isPostLiked, setIsPostLiked] = useState(false);
+
+  useEffect(() => {
+    isLiked().then((value) => {
+      setIsPostLiked(value!);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (!post) {
+    // Return some sort of loading component;
+    return <>Loading ...</>;
+  }
+
+  const { author, caption, _count, imagesUrl } = post;
   /*
   TODO: Implement image carousel
   TODO: Implement Likes
@@ -61,6 +86,20 @@ function Post() {
             <span className="font-medium mr-2">{author.username}</span>
             {caption}
           </div>
+        </div>
+        <div className="pt-1">
+          <button
+            onClick={async () => {
+              setIsPostLiked((isPostLiked: boolean) => !isPostLiked);
+              if (isPostLiked) {
+                await unLike();
+              } else {
+                await like();
+              }
+            }}
+          >
+            <PostLikeIcon isLiked={isPostLiked} />
+          </button>
         </div>
         {_count.comments !== 0 && (
           <div className="text-sm mb-2 text-gray-400 cursor-pointer font-medium">

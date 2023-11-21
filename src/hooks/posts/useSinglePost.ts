@@ -1,10 +1,10 @@
 import { axiosClient } from '@/lib/httpClient';
-import { singlePostState } from '@/store/atoms/posts';
+import { postStateWithID } from '@/store/atoms/posts';
 import { useCallback } from 'react';
 import { useSetRecoilState } from 'recoil';
 
-export function useSinglePost() {
-  const setPost = useSetRecoilState(singlePostState);
+export function useSinglePost(postId: string) {
+  const setPost = useSetRecoilState(postStateWithID(postId));
 
   const getPost = useCallback(
     async (postId: string) => {

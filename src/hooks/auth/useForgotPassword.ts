@@ -1,9 +1,10 @@
 import { axiosClient } from '@/lib/httpClient';
 import { AxiosError, AxiosResponse } from 'axios';
+import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 
 export function useForgotPassword() {
-  async function forgotPassword(username: string) {
+  const forgotPassword = useCallback(async (username: string) => {
     const response = (await axiosClient
       .get(`/auth/forgotpass?username=${username}`)
       .catch((error: AxiosError) => {
@@ -16,7 +17,7 @@ export function useForgotPassword() {
       })) as AxiosResponse;
 
     toast.success(response.data.message);
-  }
+  }, []);
 
   return { forgotPassword };
 }

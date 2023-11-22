@@ -1,10 +1,11 @@
 import { useLike } from '@/hooks/posts/useLikes';
 import { useSinglePost } from '@/hooks/posts/useSinglePost';
 import { postStateWithID } from '@/store/atoms/posts';
-import { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { Link, NavLink, useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { PostLikeIcon } from '@/components/icons';
+import { CommentIcon, PostLikeIcon } from '@/components/icons';
+import { useComments } from '@/hooks/posts/useComments';
 
 function EnlargedPost() {
   const { id } = useParams();
@@ -35,6 +36,8 @@ type PostProps = {
 };
 
 function Post({ postID }: PostProps) {
+  const [showComments, setShowComments] = useState(false);
+  const commentRef = useRef<HTMLInputElement>(null);
   const post = useRecoilValue(postStateWithID(postID));
   const { like, unLike, isLiked } = useLike(postID);
 
@@ -53,10 +56,6 @@ function Post({ postID }: PostProps) {
 
   const { author, caption, _count, imagesUrl } = post;
   /*
-  TODO: Implement image carousel
-  TODO: Implement Likes
-  TODO: Implement Comments
-  TODO: Implement view comments
   TODO: Implement save
   */
 
@@ -69,16 +68,16 @@ function Post({ postID }: PostProps) {
           </div>
           <span className="pt-1 ml-2 font-bold text-sm">{author.username}</span>
         </Link>
-        <span className="px-2 hover:bg-gray-300 cursor-pointer rounded">
-          <i className="fas fa-ellipsis-h pt-2 text-lg" />
-        </span>
       </div>
       <img className="w-full bg-cover" src={imagesUrl[0]} />
       <div className="px-3 pb-2">
         <div className="pt-2">
-          <div className="pt-1">
+          <div className="pt-1 flex gap-2">
             <button onClick={handleClick}>
               <PostLikeIcon isLiked={isLiked} />
+            </button>
+            <button onClick={() => commentRef.current?.focus()}>
+              <CommentIcon />
             </button>
           </div>{' '}
           <i className="far fa-heart cursor-pointer" />
@@ -88,18 +87,111 @@ function Post({ postID }: PostProps) {
         </div>
         <div className="pt-1">
           <div className="mb-2 text-sm">
-            <span className="font-medium mr-2">{author.username}</span>
+            <NavLink to={`/${author.username}`} className="font-medium mr-2">
+              {author.username}
+            </NavLink>
             {caption}
           </div>
         </div>
 
-        {_count.comments !== 0 && (
-          <div className="text-sm mb-2 text-gray-400 cursor-pointer font-medium">
-            View all {_count.comments} comments
-          </div>
-        )}
+        {_count.comments !== 0 &&
+          (!showComments ? (
+            <div
+              onClick={() => {
+                setShowComments(!showComments);
+              }}
+              className="text-sm mb-2 text-gray-400 cursor-pointer font-medium"
+            >
+              View all {_count.comments} comments
+            </div>
+          ) : (
+            <Comments postID={postID} />
+          ))}
+        <WriteComment commentRef={commentRef} postID={postID} />
       </div>
     </div>
+  );
+}
+
+type CommentsProps = {
+  postID: string;
+};
+
+function Comments({ postID }: CommentsProps) {
+  const { comments } = useComments(postID);
+
+  if (!comments) {
+    <span>Loading ...</span>;
+  }
+
+  return (
+    <>
+      {comments.map((comment, i) => (
+        <Comment comment={comment} key={i} />
+      ))}
+    </>
+  );
+}
+
+type CommentProps = {
+  comment: {
+    content: string;
+    commenedBy: {
+      username: string;
+      displayPictureUrl: string;
+    };
+  };
+};
+
+function Comment({ comment }: CommentProps) {
+  const {
+    content,
+    commenedBy: { username },
+  } = comment;
+
+  return (
+    <>
+      <div className="mb-2">
+        <div className="mb-2 text-sm flex items-center">
+          <NavLink
+            to={`/${username}`}
+            className="mr-2 flex items-center gap-2 font-semibold text-sm"
+          >
+            <span>{username}</span>
+          </NavLink>
+          <div>{content}</div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+type WriteCommentProps = {
+  postID: string;
+  commentRef: React.RefObject<HTMLInputElement>;
+};
+
+function WriteComment({ postID, commentRef }: WriteCommentProps) {
+  const { postComment } = useComments(postID);
+
+  const handleSubmit = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+
+    // Check if the comment input is null or empty
+    if (!commentRef.current?.value) return;
+    postComment(commentRef.current?.value);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="flex">
+      <input
+        placeholder="Add a comment"
+        className="text-gray-300 text-sm p-1 w-full rounded-sm bg-transparent border-none focus:ring-transparent"
+        type="text"
+        ref={commentRef}
+      />
+      {commentRef.current?.value && <button type="submit">Post</button>}
+    </form>
   );
 }
 

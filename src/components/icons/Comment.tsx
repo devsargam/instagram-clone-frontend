@@ -1,20 +1,20 @@
 export function CommentIcon() {
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="25"
-      height="25"
-      fill="#fff"
-      stroke="#fff"
-      viewBox="0 0 32 32"
+      className="x1lliihq x1n2onr6 x5n08af"
+      height="24"
+      role="img"
+      width="24"
+      fill="currentColor"
+      viewBox="0 0 24 24"
     >
-      <g>
-        <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
-          <g fill="#fff" transform="translate(-102 -257)">
-            <path d="M118 257c-8.836 0-16 6.269-16 14 0 4.419 2.345 8.354 6 10.919V289l7.009-4.253c.97.16 1.968.253 2.991.253 8.836 0 16-6.268 16-14 0-7.731-7.164-14-16-14"></path>
-          </g>
-        </g>
-      </g>
+      <title>Comment</title>
+      <path
+        d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
     </svg>
   );
 }

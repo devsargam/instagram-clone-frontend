@@ -1,7 +1,7 @@
 import { useLike } from '@/hooks/posts/useLikes';
 import { useSinglePost } from '@/hooks/posts/useSinglePost';
 import { postStateWithID } from '@/store/atoms/posts';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { PostLikeIcon } from '@/components/icons';
@@ -37,14 +37,14 @@ type PostProps = {
 function Post({ postID }: PostProps) {
   const post = useRecoilValue(postStateWithID(postID));
   const { like, unLike, isLiked } = useLike(postID);
-  const [isPostLiked, setIsPostLiked] = useState(false);
 
-  useEffect(() => {
-    isLiked().then((value) => {
-      setIsPostLiked(value!);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const handleClick = async () => {
+    if (isLiked) {
+      await unLike();
+    } else {
+      await like();
+    }
+  };
 
   if (!post) {
     // Return some sort of loading component;
@@ -76,6 +76,11 @@ function Post({ postID }: PostProps) {
       <img className="w-full bg-cover" src={imagesUrl[0]} />
       <div className="px-3 pb-2">
         <div className="pt-2">
+          <div className="pt-1">
+            <button onClick={handleClick}>
+              <PostLikeIcon isLiked={isLiked} />
+            </button>
+          </div>{' '}
           <i className="far fa-heart cursor-pointer" />
           <span className="text-sm text-gray-400 font-medium">
             {_count.likes} likes
@@ -87,20 +92,7 @@ function Post({ postID }: PostProps) {
             {caption}
           </div>
         </div>
-        <div className="pt-1">
-          <button
-            onClick={async () => {
-              setIsPostLiked((isPostLiked: boolean) => !isPostLiked);
-              if (isPostLiked) {
-                await unLike();
-              } else {
-                await like();
-              }
-            }}
-          >
-            <PostLikeIcon isLiked={isPostLiked} />
-          </button>
-        </div>
+
         {_count.comments !== 0 && (
           <div className="text-sm mb-2 text-gray-400 cursor-pointer font-medium">
             View all {_count.comments} comments

@@ -1,9 +1,10 @@
-import { axiosClient } from '@/lib/httpClient';
-import { currentProfileState } from '@/store/atoms/profile';
-import { currentProfileType } from '@/types/currentProfile.types';
 import { AxiosError } from 'axios';
 import { useCallback, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
+
+import { axiosClient } from '@/lib/httpClient';
+import { currentProfileState } from '@/store/atoms/profile';
+import { ICurrentProfile } from '@/interfaces';
 
 export function useProfile() {
   const setCurrentUserProfile = useSetRecoilState(currentProfileState);
@@ -14,7 +15,7 @@ export function useProfile() {
       setUserNotFound(false);
       try {
         const response = await axiosClient(`/users/profile/${username}`);
-        const profileData = response.data as currentProfileType;
+        const profileData = response.data as ICurrentProfile;
         setCurrentUserProfile(profileData);
       } catch (e: unknown) {
         if (e instanceof AxiosError) {

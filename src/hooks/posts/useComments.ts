@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil';
 
 import { axiosClient } from '@/lib/httpClient';
 import { commentStateWithPostID } from '@/store/atoms/comments';
-import { commentType } from '@/types';
+import { IComment } from '@/interfaces';
 
 export const useComments = (postId: string) => {
   const [comments, setComments] = useRecoilState(
@@ -14,7 +14,7 @@ export const useComments = (postId: string) => {
   useEffect(() => {
     const getComments = async () => {
       const response = await axiosClient.get(`/comments/posts/${postId}`);
-      const responseData = response.data as commentType[];
+      const responseData = response.data as IComment[];
       setComments(responseData);
     };
 

@@ -1,7 +1,8 @@
-import { axiosClient } from '@/lib/httpClient';
-import { postState } from '@/store/atoms/posts';
 import { useSetRecoilState } from 'recoil';
 import { useCallback } from 'react';
+
+import { axiosClient } from '@/lib/httpClient';
+import { postState } from '@/store/atoms/posts';
 
 export function usePosts() {
   const setPosts = useSetRecoilState(postState);

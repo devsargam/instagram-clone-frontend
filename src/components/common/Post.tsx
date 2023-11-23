@@ -5,8 +5,8 @@ import { CommentIcon, PostLikeIcon } from '../icons';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
-import { useComments } from '@/hooks/posts/useComments';
-import { useLike } from '@/hooks/posts/useLikes';
+import { useComments } from '@/hooks';
+import { useLike } from '@/hooks';
 import { postStateWithID } from '@/store/atoms/posts';
 
 type PostProps = {

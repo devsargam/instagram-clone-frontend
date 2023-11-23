@@ -2,7 +2,7 @@ import { LoginSchema } from '@/schema';
 import { Field, Form, Formik, FormikHelpers } from 'formik';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { Link, useNavigate } from 'react-router-dom';
-import { useLogin } from '@/hooks/auth';
+import { useLogin } from '@/hooks';
 
 export function Login() {
   return (

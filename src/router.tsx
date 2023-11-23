@@ -3,16 +3,17 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from 'react-router-dom';
+
 import {
   ForgotPasswordPage,
   LoginPage,
   SignUpPage,
   VerificationPage,
-} from './routes/accounts';
-import { ProfilePage } from './routes/profile';
-import Home from './routes/Root';
-import { Protected } from './Protected';
-import EnlargedPost from './routes/p/EnlargedPost';
+} from '@/routes/accounts';
+import { ProfilePage } from '@/routes/profile';
+import Home from '@/routes/Root';
+import { Protected } from '@/Protected';
+import EnlargedPost from '@/routes/p/EnlargedPost';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(

@@ -1,4 +1,4 @@
-export type currentProfileType = {
+export interface ICurrentProfile {
   loading: boolean;
   id: string;
   username: string;
@@ -15,4 +15,4 @@ export type currentProfileType = {
     following: number;
   };
   isFollowedByUser: boolean;
-};
+}

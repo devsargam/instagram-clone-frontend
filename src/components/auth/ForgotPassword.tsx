@@ -1,4 +1,4 @@
-import { useForgotPassword } from '@/hooks/auth';
+import { useForgotPassword } from '@/hooks';
 import { ForgotPasswordSchema } from '@/schema';
 import { Field, Form, Formik, FormikHelpers } from 'formik';
 import { Link } from 'react-router-dom';

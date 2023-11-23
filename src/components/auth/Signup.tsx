@@ -2,7 +2,7 @@ import { Field, Form, Formik, FormikHelpers } from 'formik';
 import { SignupSchema } from '@/schema';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSignup } from '@/hooks/auth';
+import { useSignup } from '@/hooks';
 
 export function SignUp() {
   return (

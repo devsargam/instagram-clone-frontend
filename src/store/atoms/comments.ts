@@ -1,10 +1,10 @@
 import { RecoilState, atom } from 'recoil';
 
-import { commentType } from '@/types';
+import { IComment } from '@/interfaces';
 
 //* Since recoil doesn't allow for recreating the same atom keeping the existing atom in cache
 const cache: {
-  [key: string]: RecoilState<commentType[]>;
+  [key: string]: RecoilState<IComment[]>;
 } = {};
 
 export const commentStateWithPostID = (postID: string) => {
@@ -12,7 +12,7 @@ export const commentStateWithPostID = (postID: string) => {
     return cache[postID];
   }
 
-  cache[postID] = atom<commentType[]>({
+  cache[postID] = atom<IComment[]>({
     key: `commentState${postID}`,
     default: [],
   });

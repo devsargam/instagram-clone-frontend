@@ -1,7 +1,8 @@
-import { axiosClient } from '@/lib/httpClient';
 import { AxiosError, AxiosResponse } from 'axios';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
+
+import { axiosClient } from '@/lib/httpClient';
 
 export function useSignup() {
   const signup = useCallback(

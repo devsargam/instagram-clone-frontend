@@ -1,5 +1,6 @@
-import VerificationMail from '@/components/icons/VerificationMail';
 import { Link } from 'react-router-dom';
+
+import VerificationMail from '@/components/icons/VerificationMail';
 
 export function VerificationPage() {
   return (

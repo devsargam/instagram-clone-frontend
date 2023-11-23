@@ -1,4 +1,5 @@
 import { selector } from 'recoil';
+
 import { currentProfileState } from '../atoms/profile';
 
 export const currentUserProfileSelector = selector({

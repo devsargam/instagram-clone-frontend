@@ -1,12 +1,13 @@
-import { currentProfileType } from '@/types/currentProfile.types';
 import { atom } from 'recoil';
+
+import { ICurrentProfile } from '@/interfaces';
 
 export const profileFilterState = atom({
   key: 'profileFilterState',
   default: '',
 });
 
-export const currentProfileState = atom<currentProfileType>({
+export const currentProfileState = atom<ICurrentProfile>({
   key: 'currentProfileState',
   default: {
     loading: true,

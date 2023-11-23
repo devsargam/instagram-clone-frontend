@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { Post } from '@/components/common';
-import { useSinglePost } from '@/hooks/posts/useSinglePost';
+import { useSinglePost } from '@/hooks';
 
 function EnlargedPost() {
   const { id } = useParams();

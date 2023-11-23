@@ -104,7 +104,7 @@ function LoginForm() {
         </Formik>
         <div className="flex justify-center">
           <Link
-            to="/accounts/password/forgot"
+            to="/accounts/forgot-password"
             className="link text-xs my-3 relative"
           >
             Forgot password?

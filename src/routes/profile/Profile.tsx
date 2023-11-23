@@ -3,19 +3,15 @@ import { Posts } from '@/components/profile';
 import { UpperProfile } from '@/components/profile/UpperProfile';
 import { usePosts } from '@/hooks/posts/usePosts';
 import { useProfile } from '@/hooks/profile/useProfile';
-import { profileFilterState } from '@/store/atoms/profile';
 import { useEffect } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
 
 export function ProfilePage() {
   const { userNotFound, getProfile } = useProfile();
   const { getPosts } = usePosts();
-  const setProfileFilterState = useSetRecoilState(profileFilterState);
   const param = useParams();
 
   useEffect(() => {
-    setProfileFilterState(param.username!);
     getProfile(param.username!);
     getPosts(param.username!);
 

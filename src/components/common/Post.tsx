@@ -2,6 +2,8 @@ import { useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { CommentIcon, PostLikeIcon } from '../icons';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 import { useComments } from '@/hooks/posts/useComments';
 import { useLike } from '@/hooks/posts/useLikes';
@@ -45,7 +47,16 @@ export function Post({ postID }: PostProps) {
           <span className="pt-1 ml-2 font-bold text-sm">{author.username}</span>
         </Link>
       </div>
-      <img className="w-full bg-cover" src={imagesUrl[0]} />
+      <Carousel
+        animationHandler={'fade'}
+        emulateTouch
+        showStatus={false}
+        showThumbs={false}
+      >
+        {imagesUrl.map((url, i) => (
+          <img key={i} className="w-full bg-cover select-none" src={url} />
+        ))}
+      </Carousel>
       <div className="px-3 pb-2">
         <div className="pt-2">
           <div className="pt-1 flex gap-2">

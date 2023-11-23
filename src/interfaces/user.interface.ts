@@ -1,4 +1,4 @@
-export type accountStateType = {
+export interface IAccountState {
   token: string;
   loading: boolean;
-};
+}

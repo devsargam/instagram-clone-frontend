@@ -1,4 +1,5 @@
 import { selector } from 'recoil';
+
 import { postState } from '../atoms/posts';
 
 export const previewPostSelector = selector({

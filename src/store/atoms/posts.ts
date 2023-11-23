@@ -1,14 +1,15 @@
-import { postType } from '@/types';
 import { RecoilState, atom } from 'recoil';
 
-export const postState = atom<postType[]>({
+import { IPost } from '@/interfaces';
+
+export const postState = atom<IPost[]>({
   key: 'postState',
   default: [],
 });
 
 //* Since recoil doesn't allow for recreating the same atom keeping the existing atom in cache
 const cache: {
-  [key: string]: RecoilState<postType | null>;
+  [key: string]: RecoilState<IPost | null>;
 } = {};
 
 export const postStateWithID = (id: string) => {
@@ -16,7 +17,7 @@ export const postStateWithID = (id: string) => {
     return cache[id];
   }
 
-  cache[id] = atom<postType | null>({
+  cache[id] = atom<IPost | null>({
     key: `postState_${id}`,
     default: null,
   });

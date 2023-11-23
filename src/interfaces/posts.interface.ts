@@ -3,7 +3,15 @@ export interface IPost {
   title: string;
   caption: string;
   imagesUrl: string[];
-  createdAt: Date;
-  updatedAt: Date;
-  authorId: string;
+  author: {
+    id: string;
+    username: string;
+    displayPictureUrl: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+  _count: {
+    comments: number;
+    likes: number;
+  };
 }

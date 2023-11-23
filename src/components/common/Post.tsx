@@ -38,13 +38,13 @@ export function Post({ postID }: PostProps) {
   */
 
   return (
-    <div className=" rounded overflow-hidden border-gray-800 border w-full lg:w-4/12 md:w-6/12 bg-black mx-3 md:mx-0 lg:mx-0 my-10">
-      <div className="w-full flex justify-between p-3">
-        <Link to={`/${author.username}`} className="flex">
-          <div className="rounded-full h-8 w-8 bg-gray-500 flex items-center justify-center overflow-hidden">
-            <img src={author.displayPictureUrl} alt="profilepic" />
+    <div className=' rounded overflow-hidden border-gray-800 border w-full lg:w-4/12 md:w-6/12 bg-black mx-3 md:mx-0 lg:mx-0 my-10'>
+      <div className='w-full flex justify-between p-3'>
+        <Link to={`/${author.username}`} className='flex'>
+          <div className='rounded-full h-8 w-8 bg-gray-500 flex items-center justify-center overflow-hidden'>
+            <img src={author.displayPictureUrl} alt='profilepic' />
           </div>
-          <span className="pt-1 ml-2 font-bold text-sm">{author.username}</span>
+          <span className='pt-1 ml-2 font-bold text-sm'>{author.username}</span>
         </Link>
       </div>
       <Carousel
@@ -54,12 +54,12 @@ export function Post({ postID }: PostProps) {
         showThumbs={false}
       >
         {imagesUrl.map((url, i) => (
-          <img key={i} className="w-full bg-cover select-none" src={url} />
+          <img key={i} className='w-full bg-cover select-none' src={url} />
         ))}
       </Carousel>
-      <div className="px-3 pb-2">
-        <div className="pt-2">
-          <div className="pt-1 flex gap-2">
+      <div className='px-3 pb-2'>
+        <div className='pt-2'>
+          <div className='pt-1 flex gap-2'>
             <button onClick={handleClick}>
               <PostLikeIcon isLiked={isLiked} />
             </button>
@@ -67,14 +67,14 @@ export function Post({ postID }: PostProps) {
               <CommentIcon />
             </button>
           </div>{' '}
-          <i className="far fa-heart cursor-pointer" />
-          <span className="text-sm text-gray-400 font-medium">
+          <i className='far fa-heart cursor-pointer' />
+          <span className='text-sm text-gray-400 font-medium'>
             {_count.likes} likes
           </span>
         </div>
-        <div className="pt-1">
-          <div className="mb-2 text-sm">
-            <NavLink to={`/${author.username}`} className="font-medium mr-2">
+        <div className='pt-1'>
+          <div className='mb-2 text-sm'>
+            <NavLink to={`/${author.username}`} className='font-medium mr-2'>
               {author.username}
             </NavLink>
             {caption}
@@ -87,7 +87,7 @@ export function Post({ postID }: PostProps) {
               onClick={() => {
                 setShowComments(!showComments);
               }}
-              className="text-sm mb-2 text-gray-400 cursor-pointer font-medium"
+              className='text-sm mb-2 text-gray-400 cursor-pointer font-medium'
             >
               View all {_count.comments} comments
             </div>
@@ -138,11 +138,11 @@ function Comment({ comment }: CommentProps) {
 
   return (
     <>
-      <div className="mb-2">
-        <div className="mb-2 text-sm flex items-center">
+      <div className='mb-2'>
+        <div className='mb-2 text-sm flex items-center'>
           <NavLink
             to={`/${username}`}
-            className="mr-2 flex items-center gap-2 font-semibold text-sm"
+            className='mr-2 flex items-center gap-2 font-semibold text-sm'
           >
             <span>{username}</span>
           </NavLink>
@@ -170,14 +170,14 @@ function WriteComment({ postID, commentRef }: WriteCommentProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex">
+    <form onSubmit={handleSubmit} className='flex'>
       <input
-        placeholder="Add a comment"
-        className="text-gray-300 text-sm p-1 w-full rounded-sm bg-transparent border-none focus:ring-transparent"
-        type="text"
+        placeholder='Add a comment'
+        className='text-gray-300 text-sm p-1 w-full rounded-sm bg-transparent border-none focus:ring-transparent'
+        type='text'
         ref={commentRef}
       />
-      {commentRef.current?.value && <button type="submit">Post</button>}
+      {commentRef.current?.value && <button type='submit'>Post</button>}
     </form>
   );
 }

@@ -1,9 +1,10 @@
-import { axiosClient } from '@/lib/httpClient';
-import { postStateWithID } from '@/store/atoms/posts';
-import { postType } from '@/types';
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useRecoilState } from 'recoil';
+
+import { axiosClient } from '@/lib/httpClient';
+import { postStateWithID } from '@/store/atoms/posts';
+import { IPost } from '@/interfaces';
 
 export function useLike(postId: string) {
   const [postState, setPostState] = useRecoilState(postStateWithID(postId));
@@ -29,7 +30,7 @@ export function useLike(postId: string) {
       await axiosClient.post(`/posts/${postId}/like`);
       if (postState !== null) {
         // Update the likes property
-        const updatedPost: postType = {
+        const updatedPost: IPost = {
           ...postState,
           _count: {
             ...postState._count,
@@ -50,7 +51,7 @@ export function useLike(postId: string) {
       await axiosClient.post(`/posts/${postId}/removeLike`);
       if (postState !== null) {
         // Update the likes property
-        const updatedPost: postType = {
+        const updatedPost: IPost = {
           ...postState,
           _count: {
             ...postState._count,

@@ -1,10 +1,11 @@
+import { useEffect } from 'react';
+import { NavLink, useParams } from 'react-router-dom';
+
 import { Navigation } from '@/components/common/Navigation';
 import { Posts } from '@/components/profile';
 import { UpperProfile } from '@/components/profile/UpperProfile';
 import { usePosts } from '@/hooks/posts/usePosts';
 import { useProfile } from '@/hooks/profile/useProfile';
-import { useEffect } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
 
 export function ProfilePage() {
   const { userNotFound, getProfile } = useProfile();

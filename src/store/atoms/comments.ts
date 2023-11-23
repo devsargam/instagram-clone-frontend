@@ -1,5 +1,6 @@
-import { commentType } from '@/types';
 import { RecoilState, atom } from 'recoil';
+
+import { commentType } from '@/types';
 
 //* Since recoil doesn't allow for recreating the same atom keeping the existing atom in cache
 const cache: {

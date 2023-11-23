@@ -1,9 +1,10 @@
-import { axiosClient } from '@/lib/httpClient';
-import { commentStateWithPostID } from '@/store/atoms/comments';
-import { commentType } from '@/types';
 import { useCallback, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useRecoilState } from 'recoil';
+
+import { axiosClient } from '@/lib/httpClient';
+import { commentStateWithPostID } from '@/store/atoms/comments';
+import { commentType } from '@/types';
 
 export const useComments = (postId: string) => {
   const [comments, setComments] = useRecoilState(

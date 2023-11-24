@@ -1,11 +1,10 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { CommentIcon, PostLikeIcon } from '../icons';
 import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
-import { useComments } from '@/hooks';
+import { useComments, useSinglePost } from '@/hooks';
 import { useLike } from '@/hooks';
 import { postStateWithID } from '@/store/atoms/posts';
 
@@ -18,6 +17,15 @@ export function Post({ postID }: PostProps) {
   const commentRef = useRef<HTMLInputElement>(null);
   const post = useRecoilValue(postStateWithID(postID));
   const { like, unLike, isLiked } = useLike(postID);
+
+  const { getPost } = useSinglePost(postID!);
+
+  useEffect(() => {
+    (async () => {
+      await getPost(postID!);
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleClick = async () => {
     if (isLiked) {
@@ -38,7 +46,7 @@ export function Post({ postID }: PostProps) {
   */
 
   return (
-    <div className=" rounded overflow-hidden border-gray-800 border w-full lg:w-4/12 md:w-6/12 bg-black mx-3 md:mx-0 lg:mx-0 my-10">
+    <div className="rounded overflow-hidden border-gray-800 border w-full lg:w-4/12 md:w-6/12 bg-black mx-3 md:mx-0 lg:mx-0  my-1 flex flex-col">
       <div className="w-full flex justify-between p-3">
         <Link to={`/${author.username}`} className="flex">
           <div className="rounded-full h-8 w-8 bg-gray-500 flex items-center justify-center overflow-hidden">
@@ -47,14 +55,11 @@ export function Post({ postID }: PostProps) {
           <span className="pt-1 ml-2 font-bold text-sm">{author.username}</span>
         </Link>
       </div>
-      <Carousel
-        animationHandler={'fade'}
-        emulateTouch
-        showStatus={false}
-        showThumbs={false}
-      >
+      <Carousel emulateTouch showThumbs={false}>
         {imagesUrl.map((url, i) => (
-          <img key={i} className="w-full bg-cover select-none" src={url} />
+          <>
+            <img key={i} className="w-full bg-cover select-none" src={url} />
+          </>
         ))}
       </Carousel>
       <div className="px-3 pb-2">

@@ -7,6 +7,11 @@ export const postState = atom<IPost[]>({
   default: [],
 });
 
+export const postUrlsState = atom<{ id: string }[]>({
+  key: 'postUrlsState',
+  default: [],
+});
+
 //* Since recoil doesn't allow for recreating the same atom keeping the existing atom in cache
 const cache: {
   [key: string]: RecoilState<IPost | null>;

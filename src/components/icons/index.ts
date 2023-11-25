@@ -6,3 +6,4 @@ export * from './Like';
 export * from './PostLike';
 export * from './Home';
 export * from './Create';
+export * from './Gear';

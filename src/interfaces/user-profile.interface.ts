@@ -15,3 +15,9 @@ export interface IUserProfile {
   };
   isFollowedByUser: true;
 }
+
+export interface IloggedInUserProfile {
+  displayPictureUrl: string;
+  username: string;
+  id: string;
+}

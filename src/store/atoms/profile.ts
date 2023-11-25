@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 
-import { ICurrentProfile } from '@/interfaces';
+import { ICurrentProfile, IloggedInUserProfile } from '@/interfaces';
 
 export const profileFilterState = atom({
   key: 'profileFilterState',
@@ -26,5 +26,14 @@ export const currentProfileState = atom<ICurrentProfile>({
       following: 0,
     },
     isFollowedByUser: false,
+  },
+});
+
+export const loggedInUserProfileState = atom<IloggedInUserProfile>({
+  key: 'loggedInUserProfileState',
+  default: {
+    id: '',
+    username: '',
+    displayPictureUrl: '',
   },
 });

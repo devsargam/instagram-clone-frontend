@@ -7,7 +7,7 @@ export function Feed() {
   const { posts } = useFeed();
 
   return (
-    <div className="flex w-full justify-around">
+    <div className="flex w-full justify-between">
       <Navigation />
       <div className="flex flex-col justify-center items-center">
         {posts.map((post) => {

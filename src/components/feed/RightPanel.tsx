@@ -2,9 +2,12 @@ import { useSuggestedPeople } from '@/hooks/feed/useSuggestedPeople';
 import { Button } from '../common';
 import { SuggestedPerson } from '../common/SuggestedPerson';
 import { ISuggestedUser } from '@/interfaces';
+import { useRecoilValue } from 'recoil';
+import { loggedInUserProfileState } from '@/store/atoms/profile';
 
 export function RightPanel() {
   const { suggestedUsers } = useSuggestedPeople();
+  const loggedInUser = useRecoilValue(loggedInUserProfileState);
 
   return (
     <section className="w-[22rem] hidden lg:block space-y-4 pt-4 px-4">
@@ -13,12 +16,12 @@ export function RightPanel() {
           <div className="rounded-full overflow-hidden w-16 h-16 cursor-pointer">
             <img
               className="w-full"
-              alt="sargam"
-              src="https://sargams-bucket.s3.eu-north-1.amazonaws.com/dd2f9f7a-2289-445e-9bee-fad7095e403a.png"
+              alt={`${loggedInUser.username} photo`}
+              src={loggedInUser.displayPictureUrl}
             />
           </div>
           <div>
-            <h2 className="font-semibold text-md">sargam</h2>
+            <h2 className="font-semibold text-md">{loggedInUser.username}</h2>
           </div>
         </div>
       </div>

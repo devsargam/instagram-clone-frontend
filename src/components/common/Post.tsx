@@ -46,7 +46,7 @@ export function Post({ postID }: PostProps) {
   */
 
   return (
-    <div className="rounded overflow-hidden border-gray-800 border w-full lg:w-4/12 md:w-6/12 bg-black mx-3 md:mx-0 lg:mx-0  my-1 flex flex-col">
+    <div className="rounded overflow-hidden border-gray-800 border w-11/12 mx-auto md:min-w-[30rem] lg:w-4/12 md:w-6/12 bg-black sm:mx-3 md:mx-0 lg:mx-0  my-1 flex flex-col">
       <div className="w-full flex justify-between p-3">
         <Link to={`/${author.username}`} className="flex">
           <div className="rounded-full h-8 w-8 bg-gray-500 flex items-center justify-center overflow-hidden">
@@ -56,10 +56,8 @@ export function Post({ postID }: PostProps) {
         </Link>
       </div>
       <Carousel emulateTouch showThumbs={false}>
-        {imagesUrl.map((url, i) => (
-          <>
-            <img key={i} className="w-full bg-cover select-none" src={url} />
-          </>
+        {imagesUrl.map((url) => (
+          <img key={url} className="w-full bg-cover select-none" src={url} />
         ))}
       </Carousel>
       <div className="px-3 pb-2">

@@ -5,15 +5,14 @@ import { PostPreview } from './PostPreview';
 
 export function Posts() {
   const userPosts = useRecoilValue(previewPostSelector);
-  console.log(userPosts);
 
   if (!userPosts.length) {
     return (
       <>
-        <span className='text-sm font-bold pt-5'>POSTS</span>
-        <div className='w-full h-full flex justify-center text-white flex-col items-center'>
+        <span className="text-sm font-bold pt-5">POSTS</span>
+        <div className="w-full h-full flex justify-center text-white flex-col items-center">
           <CameraIcon />
-          <h1 className='text-3xl'>No Posts Yet</h1>
+          <h1 className="text-3xl">No Posts Yet</h1>
         </div>
       </>
     );
@@ -21,8 +20,8 @@ export function Posts() {
 
   return (
     <>
-      <span className='text-sm font-bold py-5'>POSTS</span>
-      <div className='lg:w-4/5 w-full h-full grid grid-cols-3'>
+      <span className="text-sm font-bold py-5">POSTS</span>
+      <div className="lg:w-4/5 w-full h-full grid grid-cols-3">
         {userPosts.map((post) => (
           <PostPreview
             previewImage={post.previewImage}

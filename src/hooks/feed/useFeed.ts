@@ -14,7 +14,8 @@ export function useFeed() {
     };
 
     getPosts();
-  }, [setPostUrls]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return { posts: postUrls };
 }

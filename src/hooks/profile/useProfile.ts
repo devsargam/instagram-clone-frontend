@@ -22,6 +22,7 @@ export function useProfile() {
           console.log(e.response?.status);
           if (e.response?.status) {
             setUserNotFound(true);
+            localStorage.removeItem('token');
           }
         }
       }

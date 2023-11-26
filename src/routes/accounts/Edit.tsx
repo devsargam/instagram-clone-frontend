@@ -3,8 +3,9 @@ import { axiosClient } from '@/lib/httpClient';
 import { EditProfileSchema } from '@/schema';
 import { loggedInUserProfileState } from '@/store/atoms/profile';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { ChangeEvent, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 
 export function Edit() {
@@ -98,9 +99,45 @@ export function Edit() {
 }
 
 function ChangeDP() {
-  const { displayPictureUrl, username } = useRecoilValue(
-    loggedInUserProfileState,
-  );
+  const [profile, setProfile] = useRecoilState(loggedInUserProfileState);
+
+  const [file, setFile] = useState<File>();
+  const ref = useRef<HTMLInputElement>(null);
+
+  const uploadFileToBackend = async () => {
+    if (!file) {
+      return;
+    }
+
+    const response = await axiosClient.post(
+      '/users/dp',
+      {
+        'profile-pic': file,
+      },
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
+    );
+    const res = await axiosClient.get('/users/me');
+    setProfile({
+      id: res.data.id,
+      username: res.data.username,
+      displayPictureUrl: res.data.displayPictureUrl,
+    });
+    toast.info(response.data.message);
+  };
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      if (e.target.files[0].size > 1024 ** 2) {
+        return toast.error('Image size must be less than 5MB');
+      }
+      setFile(e.target.files[0]);
+      uploadFileToBackend();
+    }
+  };
 
   return (
     <div className="flex w-96 justify-between items-center bg-gray-900 px-4 py-2 rounded-2xl">
@@ -109,12 +146,22 @@ function ChangeDP() {
           height={50}
           width={50}
           className="rounded-full"
-          src={displayPictureUrl}
-          alt={`${username}'s photo`}
+          src={profile.displayPictureUrl}
+          alt={`${profile.username}'s photo`}
         />
-        <span className="text-md font-semibold">{username}</span>
+        <span className="text-md font-semibold">{profile.username}</span>
       </div>
-      <button className="bg-white text-black font-semibold p-2 rounded-md h-fit">
+      <input
+        type="file"
+        className="hidden"
+        ref={ref}
+        onChange={handleFileChange}
+        accept="image/*"
+      />
+      <button
+        className="bg-white text-black font-semibold p-2 rounded-md h-fit"
+        onClick={() => ref.current?.click()}
+      >
         Change Photo
       </button>
     </div>

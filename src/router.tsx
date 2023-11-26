@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 
 import {
+  Edit,
   ForgotPasswordPage,
   LoginPage,
   SignUpPage,
@@ -24,6 +25,14 @@ export const router = createBrowserRouter(
       <Route
         path="/accounts/forgot-password"
         element={<ForgotPasswordPage />}
+      />
+      <Route
+        path="/accounts/edit"
+        element={
+          <Protected>
+            <Edit />
+          </Protected>
+        }
       />
       <Route
         path="/"

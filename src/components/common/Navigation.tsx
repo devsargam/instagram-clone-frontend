@@ -8,7 +8,7 @@ export function Navigation() {
   const loggedInUser = useRecoilValue(loggedInUserProfileState);
 
   return (
-    <nav className="hidden  h-full w-80 bg-black border-r-[0.2px] border-gray-800 py-10 px-10 sm:flex flex-col gap-3">
+    <nav className="hidden min-h-screen w-80 bg-black border-r-[0.2px] border-gray-800 py-10 px-10 sm:flex flex-col gap-3">
       <Link to={'/'}>
         <InstagramIcon />
       </Link>

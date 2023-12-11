@@ -15,5 +15,7 @@ export function useSinglePost(postId: string) {
     [setPost],
   );
 
+  const createPost = useCallback(async (caption: string) => {}, []);
+
   return { getPost };
 }

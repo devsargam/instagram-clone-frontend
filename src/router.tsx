@@ -15,6 +15,7 @@ import { ProfilePage } from '@/routes/profile';
 import Home from '@/routes/Root';
 import { Protected } from '@/Protected';
 import EnlargedPost from '@/routes/p/EnlargedPost';
+import { CreatePost } from './routes/create';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -55,6 +56,14 @@ export const router = createBrowserRouter(
         element={
           <Protected>
             <EnlargedPost />
+          </Protected>
+        }
+      />
+      <Route
+        path="/create/post"
+        element={
+          <Protected>
+            <CreatePost />
           </Protected>
         }
       />

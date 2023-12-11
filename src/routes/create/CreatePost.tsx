@@ -31,7 +31,7 @@ export function CreatePost() {
   const urls = files.map((file) => URL.createObjectURL(file));
 
   return (
-    <main className="flex w-full">
+    <main className="flex w-full bg-black text-white">
       <Navigation />
       <div className="flex w-full gap-5 flex-col-reverse md:flex-row md:justify-around items-center">
         {/* Post Creation Section */}

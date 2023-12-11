@@ -21,7 +21,7 @@ export function Posts() {
   return (
     <>
       <span className="text-sm font-bold py-5">POSTS</span>
-      <div className="lg:w-4/5 w-full h-full grid grid-cols-3">
+      <div className="lg:w-4/5 h-full grid grid-cols-1 gap-5 md:grid-cols-3 justify-center">
         {userPosts.map((post) => (
           <PostPreview
             previewImage={post.previewImage}

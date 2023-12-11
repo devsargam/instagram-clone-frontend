@@ -20,7 +20,7 @@ export function ProfilePage() {
   }, [param.username]);
 
   return (
-    <main className="flex h-screen bg-black text-white">
+    <main className="flex min-h-screen bg-black text-white">
       {/* Left Side Navigation Bar */}
       <Navigation />
       {/* // TODO: Implement Navigation*/}

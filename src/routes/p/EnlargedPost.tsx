@@ -7,7 +7,7 @@ function EnlargedPost() {
   const { id } = useParams();
   return (
     <>
-      <main className="flex justify-center">
+      <main className="flex justify-center bg-black text-white min-h-screen">
         <Post postID={id!} />
       </main>
     </>

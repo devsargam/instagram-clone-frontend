@@ -7,10 +7,11 @@ import { toast } from 'react-toastify';
 
 export function CreatePost() {
   const [files, setFiles] = useState<File[]>([]);
-  const [caption, setCaption] = useState('');
+  const [caption, setCaption] = useState('Caption will look like this');
 
   const postData = async () => {
     try {
+      if (!files.length) return toast('Please select at least 1 image');
       const formData = new FormData();
 
       files.map((file) => {
@@ -19,9 +20,8 @@ export function CreatePost() {
       formData.append('title', 'hii');
       formData.append('caption', caption);
 
-      const res = await axiosClient.post('/posts/', formData);
-
-      console.log(res);
+      await axiosClient.post('/posts/', formData);
+      toast('Post Created');
     } catch (e) {
       console.log(e);
       toast('Something Wrong Happened');
@@ -35,7 +35,7 @@ export function CreatePost() {
       <Navigation />
       <div className="flex w-full gap-5 flex-col-reverse md:flex-row md:justify-around items-center">
         {/* Post Creation Section */}
-        <div className="flex md:justify-center bg-gray-950 w-full sm:w-96 flex-col px-5 rounded-lg">
+        <div className="flex md:justify-center bg-gray-950 w-full sm:w-96 flex-col md:px-5 rounded-lg">
           {/* Caption */}
           <label htmlFor="caption" className="font-bold">
             Caption
@@ -54,24 +54,20 @@ export function CreatePost() {
           <ImageFileInput
             onFilesChange={(selectedFiles) => setFiles(selectedFiles)}
           />
-
-          <button onClick={postData}>Submit</button>
+          <button onClick={postData}>Upload</button>
         </div>
+
         {/* Post Preview Section */}
         <div>
           {/* PART 1 */}
+          <h1 className="text-center text-2xl">Post Preview</h1>
           <div className="rounded overflow-hidden border-gray-800 border w-11/12 mx-auto md:min-w-[30rem] lg:w-4/12 md:w-6/12 bg-black sm:mx-3 md:mx-0 lg:mx-0  my-1 flex flex-col">
-            <div className="w-full flex justify-between p-3">
-              <div className="rounded-full h-8 w-8 bg-gray-500 flex items-center justify-center overflow-hidden">
-                {/* <img src={author.displayPictureUrl} alt="profilepic" /> */}
-              </div>
-              <span className="pt-1 ml-2 font-bold text-sm">
-                {/* {author.username} */}
-                Sargam
-              </span>
+            <div className="w-full flex items-center p-3">
+              <div className="rounded-full h-8 w-8 bg-gray-500 flex items-center justify-center overflow-hidden"></div>
+              <span className="pt-1 ml-2 font-bold text-sm">username</span>
             </div>
             {urls.length ? (
-              <Carousel emulateTouch showThumbs={false}>
+              <Carousel emulateTouch showThumbs={false} className="w-[478px]">
                 {urls.map((url, i) => (
                   <img
                     src={url}
@@ -95,7 +91,7 @@ export function CreatePost() {
                   <button>
                     <CommentIcon />
                   </button>
-                </div>{' '}
+                </div>
                 <i className="far fa-heart cursor-pointer" />
                 <span className="text-sm text-gray-400 font-medium">
                   1k likes
@@ -103,12 +99,7 @@ export function CreatePost() {
               </div>
               <div className="pt-1">
                 <div className="mb-2 text-sm">
-                  {/* <NavLink
-                    to={`/${author.username}`}
-                    className="font-medium mr-2"
-                  >
-                    {author.username}
-                  </NavLink> */}
+                  <span className="font-medium mr-2">username</span>
                   {caption}
                 </div>
               </div>
